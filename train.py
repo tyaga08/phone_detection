@@ -47,6 +47,7 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 
+# Added this comment just to check
 
 # x = 406.994
 # y = 44.01
