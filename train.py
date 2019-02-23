@@ -38,18 +38,56 @@ def main():
 		x[i] = float(xstr[i])
 		y[i] = float(ystr[i])
 
-	print(file_name)
-	print(xstr)
-	print(ystr)
+	# print(file_name)
+	# print(xstr)
+	# print(ystr)
 
-	img = cv2.imread('find_phone/'+file_name[2])
-	img = cv2.resize(img, (490,330))
-	crop_img = img[int(y[2]*326)-25:int(y[2]*326)+25, int(x[2]*490)-25:int(x[2]*490)+25]
+	positive_train_sample = [find_hog.find_hog_of_image((50,50), 20, 20, (10,10))]*100
+	negative_train_sample = [find_hog.find_hog_of_image((500,300), 120, 200, (100,60))]*100
 
-	positive_train_sample = find_hog.find_hog(50, 10)
-	positive_train_sample.compute_hog_descriptor(crop_img)
-	print(positive_train_sample.descriptor)
+	for i in range(0,100):
+		print(i)
+		img1 = cv2.imread('find_phone/'+file_name[i])#, cv2.IMREAD_GRAYSCALE)
+		
+		y_pix = int(y[i]*326)
+		x_pix = int(x[i]*490)
+		rows_img = len(img1)
+		cols_img = len(img1[0])
 
+		if y_pix < 25:
+			ycrop_min = 0
+			ycrop_max = 50
+		elif y_pix >= rows_img:
+			ycrop_min = rows_img-1-50
+			ycrop_max = rows_img-1
+		else:
+			ycrop_min = y_pix - 25
+			ycrop_max = y_pix + 25
+		
+		if x_pix < 25:
+			xcrop_min = 0
+			xcrop_max = 50
+		elif x_pix >= cols_img:
+			xcrop_min = cols_img-1-50
+			xcrop_max = cols_img-1
+		else:
+			xcrop_min = x_pix - 25
+			xcrop_max = x_pix + 25
+
+		crop_img = img1[ycrop_min:ycrop_max, xcrop_min:xcrop_max].copy()
+	
+		for a in range (int(y[i]*326)-25,int(y[i]*326)+25+1):
+			for b in range (int(x[i]*490)-25,int(x[i]*490)+25+1):
+				img1[a][b] = [255,255,255]
+		img = cv2.resize(img1, (500,300))
+		
+		positive_train_sample[i].compute_hog_descriptor(crop_img)
+		negative_train_sample[i].compute_hog_descriptor(img)
+		# print(len(positive_train_sample[0].descriptor))
+	
+	print(len(positive_train_sample[0].descriptor))
+	print(len(negative_train_sample[0].descriptor))
+	# print(len(positive_train_sample))
 	cv2.imshow('image',img)
 	cv2.imshow('crop_image',crop_img)
 	cv2.waitKey(0)
