@@ -1,11 +1,11 @@
 # including standard library headers
 import numpy as np
 import cv2
-import sklearn as sk
-import pylint
+import matplotlib as plt
 
 # including headers containing various classes
 from include import find_hog
+from include import svm_classifier
 
 def main():
 	with open('find_phone/labels.txt') as file:
@@ -42,11 +42,11 @@ def main():
 	# print(xstr)
 	# print(ystr)
 
-	positive_train_sample = [find_hog.find_hog_of_image((50,50), 20, 20, (10,10))]*100
-	negative_train_sample = [find_hog.find_hog_of_image((500,300), 120, 200, (100,60))]*100
+	positive_train_sample = [find_hog.find_hog_of_image((50,50), 20, 20, (10,10))]*rows
+	negative_train_sample = [find_hog.find_hog_of_image((500,300), 120, 200, (100,60))]*rows
 
-	for i in range(0,100):
-		print(i)
+	for i in range(0,rows):
+		print("Finding HOG Feature for: ",i)
 		img1 = cv2.imread('find_phone/'+file_name[i])#, cv2.IMREAD_GRAYSCALE)
 		
 		y_pix = int(y[i]*326)
@@ -84,10 +84,30 @@ def main():
 		positive_train_sample[i].compute_hog_descriptor(crop_img)
 		negative_train_sample[i].compute_hog_descriptor(img)
 		# print(len(positive_train_sample[0].descriptor))
+	X_data = [[0.0]]*2*rows
+	y_data = [[0]]*2*rows
+	for i in range(0,rows):
+		X_data[i] = positive_train_sample[i].descriptor
+		y_data[i] = 1
+
+	for i in range(0,rows):
+		X_data[i+rows] = negative_train_sample[i].descriptor
+		y_data[i+rows] = 0
 	
-	print(len(positive_train_sample[0].descriptor))
-	print(len(negative_train_sample[0].descriptor))
-	# print(len(positive_train_sample))
+	X_data = np.reshape(X_data,(len(X_data),len(X_data[0])))
+
+	svclf = svm_classifier.svm_clf(X_data,y_data)
+	svclf.svm_train()
+
+	# print(len(positive_train_sample[0].descriptor))
+	# print(len(negative_train_sample[0].descriptor))
+	
+	
+
+	print(len(X_data[0]))
+	print(len(y_data))
+	
+
 	cv2.imshow('image',img)
 	cv2.imshow('crop_image',crop_img)
 	cv2.waitKey(0)

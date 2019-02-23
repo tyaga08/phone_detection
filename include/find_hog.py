@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-import sklearn as sk
+
 
 class find_hog_of_image:
     def __init__(self, win_size, block_x, block_y, cell_size):
