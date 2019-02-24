@@ -2,6 +2,7 @@
 import numpy as np
 import cv2
 import matplotlib as plt
+from joblib import dump, load
 
 # including headers containing various classes
 from include import find_hog
@@ -99,11 +100,11 @@ def main():
 	svclf = svm_classifier.svm_clf(X_data,y_data)
 	svclf.svm_train()
 
+	dump(svclf.clf, 'HOG_SVM_training.joblib')
+
 	# print(len(positive_train_sample[0].descriptor))
 	# print(len(negative_train_sample[0].descriptor))
 	
-	
-
 	print(len(X_data[0]))
 	print(len(y_data))
 	
