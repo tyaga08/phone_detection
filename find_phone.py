@@ -39,40 +39,7 @@ def main():
 	test_hog = find_hog.find_hog_of_image((50,50),20,20,(10,10))
 	phone_count = 0
 	clf = load('HOG_SVM_training.joblib')
-	# for l in range(110,120):
-	# 	img1 = cv2.imread('find_phone/'+file_name[l])
-	# 	img = cv2.resize(img1, (500,500))
-	# 	test_hog.compute_hog_descriptor(img)
-
-	# 	check_for_phone = np.reshape(test_hog.descriptor,(len(test_hog.descriptor)//576,576))
-	# 	clf = load('HOG_SVM_training.joblib')
-	# 	# print(len(check_for_phone[0]))
-	# 	# print(len(check_for_phone))
-	# 	prediction = 0
-	# 	count = 0
-	# 	for i in range(0,len(check_for_phone)):
-	# 		print(i)
-	# 		prediction += clf.predict([check_for_phone[i]])
-	# 		if prediction:
-	# 			break
-	# 		# print(prediction)
-	# 		confidence = clf.predict_proba([check_for_phone[i]])
-			
-	# 	if prediction:
-	# 		# print(prediction)
-	# 		# print("Phone present")
-	# 		phone_count+=1
-	# 	# else:
-	# 		# print("No phone")
-
-	# 	# print(count)
-	# 	cv2.imshow('image',img)
-	# 	cv2.waitKey(0)
-		
-	# # cv2.destroyAllWindows()
-	# print(phone_count)
-	# print("accuracy = ", phone_count/rows)
-
+	
 	for l in range(0,rows):
 		img1 = cv2.imread('find_phone/'+file_name[l])
 		print('find_phone/'+file_name[l])
@@ -94,17 +61,6 @@ def main():
 				cv2.waitKey(1)
 		if count:
 			phone_count+=1
-		# THIS IS WHERE YOU WOULD PROCESS YOUR WINDOW, SUCH AS APPLYING A
-		# MACHINE LEARNING CLASSIFIER TO CLASSIFY THE CONTENTS OF THE
-		# WINDOW
-
-		# since we do not have a classifier, we'll just draw the window
-		# clone = resized.copy()
-		# cv2.rectangle(clone, (x, y), (x + winW, y + winH), (0, 255, 0), 2)
-			
-
-		
-		
 		
 	print('phone_count',phone_count)
 	# print("accuracy = ", phone_count/rows)
