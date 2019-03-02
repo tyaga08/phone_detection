@@ -1,6 +1,6 @@
-##################################################
-################## PHONE_DETECTION ###############
-##################################################
+##################################################  
+################## PHONE_DETECTION ###############  
+##################################################  
 
 The aim is to detect phone using Computer Vision Algorithm and Machine Learning. HOG features are being computed for the images and being fed to SVM.  
   
