@@ -6,16 +6,21 @@ from sklearn import svm
 class svm_clf:
     def __init__(self, data, label):
         # self.clf = svm.LinearSVC()
-        self.clf = svm.SVC(gamma=1, decision_function_shape='ovo', kernel='rbf',  probability=True)#, class_weight={1:5})
-        self.X_train, self.X_test, self.y_train, self.y_test = sk.model_selection.train_test_split(data, label, test_size = 0.1)#, random_state = 42)
+        self.clf = svm.SVC(gamma=1, decision_function_shape='ovo', kernel='poly', degree=3,  probability=True)#, class_weight={1:5})
+        self.X_train, self.X_test, self.y_train, self.y_test = sk.model_selection.train_test_split(data, label, test_size = 0.15, random_state = 42)
         # self.X_validate = data
     
-    def svm_train(self, train_data= None, train_label= None, test_data= None, test_label= None):
+    def svm_train(self, flag= False, train_data= None, train_label= None, test_data= None, test_label= None):
 
-        if train_data==None:
+        if flag==False:
             train_data = self.X_train
-        if train_label==None:
             train_label = self.y_train
+
+        # if train_data==None:
+        #     train_data = self.X_train
+        # if train_label==None:
+        #     train_label = self.y_train
+        
         if test_data==None:
             test_data = self.X_test
         if test_label==None:
