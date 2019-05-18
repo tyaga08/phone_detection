@@ -1,4 +1,3 @@
-#ignore the following folders
-classifier_model
+# ignore following directory and files it in
 classifier_model/*
-
+git_upload/*
