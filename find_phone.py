@@ -71,10 +71,10 @@ def main(file_name):
 		y_ans = (max_y+25+y_diff)/500
 		print(x_ans, y_ans )
 
-		# #Uncomment these statementsto visualize the algorithm
-		# cv2.rectangle(clone, (max_x, max_y), (max_x + winW, max_y + winH), (0, 0, 255), 2)
-		# cv2.imshow("Window", clone)
-		# cv2.waitKey(0)
+		#Uncomment these statementsto visualize the algorithm
+		cv2.rectangle(clone, (max_x, max_y), (max_x + winW, max_y + winH), (0, 0, 255), 2)
+		cv2.imshow("Window", clone)
+		cv2.waitKey(0)
 
 # if no phone is detected
 	else:
