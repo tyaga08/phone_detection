@@ -1,0 +1,4 @@
+#ignore the following folders
+classifier_model
+classifier_model/*
+
